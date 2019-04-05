@@ -1,0 +1,101 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tsrbeamer/theme/mu/%
+  beamercolorthemetsrbeamer-mu-tsr}[2016/06/16]
+\mode<presentation>
+  \definecolor{tsrbeamer@black}{HTML}{2B2E34}
+  \definecolor{tsrbeamer@white}{HTML}{FFFFFF}
+  \definecolor{tsrbeamer@yellow}{HTML}{FFD564}
+  \definecolor{tsrbeamer@orange}{HTML}{FF5500}
+  \definecolor{tsrbeamer@darkGreen}{HTML}{234B5A}
+  \definecolor{tsrbeamer@lightGreen}{HTML}{6FBB84}
+  \definecolor{tsrbeamer@brightGreen}{HTML}{36FE95}
+  \colorlet{tsrbeamer@lightGray}{white!80!tsrbeamer@black}
+  \colorlet{tsrbeamer@gray}{white!35!tsrbeamer@black}
+  \colorlet{tsrbeamer@darkGray}{white!20!tsrbeamer@black}
+  \definecolor{tsrbeamer@blue}{HTML}{3333B3}
+  \definecolor{tsrbeamer@lightRed}{HTML}{FF8E6B}
+  \colorlet{tsrbeamer@darkRed}{red!80!tsrbeamer@white}
+  %% Background gradients
+  \colorlet{tsrbeamer@dark@backgroundInner}{tsrbeamer@darkGreen}
+  \colorlet{tsrbeamer@dark@backgroundOuter}{tsrbeamer@darkGreen}
+  \colorlet{tsrbeamer@light@backgroundInner}{tsrbeamer@white}
+  \colorlet{tsrbeamer@light@backgroundOuter}{tsrbeamer@white}
+  \renewenvironment{darkframes}{%
+    \begingroup
+      \tsrbeamer@darktrue
+      %% Structures
+      \setbeamercolor*{frametitle}{fg=tsrbeamer@white}
+      \setbeamercolor*{framesubtitle}{fg=tsrbeamer@lightGreen}
+      %% Text
+      \setbeamercolor*{normal text}{fg=tsrbeamer@lightGray, bg=tsrbeamer@black}
+      \setbeamercolor*{structure}{fg=white, bg=tsrbeamer@black}
+      \setbeamercolor*{alerted text}{fg=tsrbeamer@lightRed}
+      %% Items, footnotes and links
+      \setbeamercolor*{item}{fg=tsrbeamer@lightGreen}
+      \setbeamercolor*{footnote mark}{fg=tsrbeamer@yellow}
+      \hypersetup{urlcolor=tsrbeamer@yellow}
+      %% Blocks
+      \setbeamercolor*{block title}{%
+        fg=tsrbeamer@white, bg=tsrbeamer@lightGreen}
+      \setbeamercolor*{block title example}{%
+        fg=tsrbeamer@white, bg=tsrbeamer@darkGray}
+      \setbeamercolor*{block title alerted}{%
+        fg=tsrbeamer@black, bg=tsrbeamer@lightRed}
+      \setbeamercolor*{block body}{%
+        fg=tsrbeamer@white,
+        bg=tsrbeamer@darkGray}
+      \setbeamercolor*{block body example}{%
+      	fg=tsrbeamer@white, bg=tsrbeamer@lightGreen}
+      \setbeamercolor*{block body alerted}{%
+      	fg=tsrbeamer@white, bg=tsrbeamer@darkGray}
+      \usebeamercolor*{normal text}
+      % Code listings
+      \lstset{%
+        commentstyle=\color{green!30!white},
+        keywordstyle=\color{blue!30!white},
+        stringstyle=\color{tsrbeamer@orange!30!white}}
+      }{%
+    \endgroup}
+  %% Structures
+  \setbeamercolor{frametitle}{fg=tsrbeamer@lightGreen}
+  \setbeamercolor{framesubtitle}{fg=tsrbeamer@darkGreen}
+  %% Text
+  \setbeamercolor{normal text}{fg=tsrbeamer@darkGreen, bg=tsrbeamer@white}
+  \setbeamercolor{structure}{fg=tsrbeamer@darkGreen, bg=tsrbeamer@white}
+  \setbeamercolor{alerted text}{fg=red}
+  \addtobeamertemplate{block begin}{%
+    \iftsrbeamer@dark\else % alerted text in plain blocks at light slides
+      \setbeamercolor{alerted text}{fg=tsrbeamer@darkRed}
+    \fi}{}
+  %% Items and links
+  \setbeamercolor{item}{fg=tsrbeamer@lightGreen}
+  \setbeamercolor{footnote mark}{fg=tsrbeamer@blue}
+  \hypersetup{urlcolor=tsrbeamer@blue}
+  %% Blocks
+  \setbeamercolor{block title}{%
+    fg=tsrbeamer@black, bg=tsrbeamer@yellow}
+  \setbeamercolor{block title example}{%
+    fg=tsrbeamer@yellow, bg=tsrbeamer@black}
+  \setbeamercolor{block title alerted}{%
+    fg=tsrbeamer@white, bg=red}
+  \setbeamercolor{block body}{%
+    fg=tsrbeamer@white, bg=tsrbeamer@black}
+  %% Title
+  \setbeamercolor{title}{fg=tsrbeamer@lightGreen, bg=tsrbeamer@black}
+  \setbeamercolor{subtitle}{fg=tsrbeamer@white, bg=tsrbeamer@black}
+  \setbeamercolor{author}{fg=tsrbeamer@lightGray, bg=tsrbeamer@black}
+  % Code listings
+  \lstset{%
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    commentstyle=\color{green!60!black},
+    extendedchars=true,
+    keywordstyle=\color{tsrbeamer@blue},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    stringstyle=\color{violet}}
+\mode
+<all>
+\endinput

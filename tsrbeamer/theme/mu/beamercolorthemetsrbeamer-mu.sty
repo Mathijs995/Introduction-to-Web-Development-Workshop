@@ -1,0 +1,37 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tsrbeamer/theme/mu/%
+  beamercolorthemetsrbeamer-mu}[2016/05/06]
+\newenvironment{darkframes}{}{}
+\mode<presentation>
+  \RequirePackage{listings}
+  \RequirePackage{ifthen}
+  \RequirePackage{tikz}
+  \newif\iftsrbeamer@dark\tsrbeamer@darkfalse
+  \defbeamertemplate*{background canvas}{tsrbeamer}{%
+    \ifthenelse{%
+      \boolean{tsrbeamer@dark} \OR \c@framenumber=0
+    }{%
+      \begin{tikzpicture}
+        \clip (0,\tsrbeamer@lengths@clipbottom) rectangle
+          (\paperwidth,\tsrbeamer@lengths@cliptop);
+        \path [inner color = tsrbeamer@dark@backgroundInner,
+               outer color = tsrbeamer@dark@backgroundOuter]
+          (0,0) rectangle (\paperwidth,\paperwidth);
+      \end{tikzpicture}
+    }{%
+      \begin{tikzpicture}
+        \clip (0,\tsrbeamer@lengths@clipbottom) rectangle
+          (\paperwidth,\tsrbeamer@lengths@cliptop);
+        \path [inner color = tsrbeamer@light@backgroundInner,
+               outer color = tsrbeamer@light@backgroundOuter]
+          (0,0) rectangle (\paperwidth,\paperwidth);
+      \end{tikzpicture}
+    }}
+  \setbeamercolor{qed symbol}{%
+    use=block body,
+    fg=block body.fg,
+    bg=block body.bg}
+  \hypersetup{colorlinks,linkcolor=}
+\mode
+<all>
+\endinput

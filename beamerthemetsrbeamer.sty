@@ -1,0 +1,179 @@
+\NeedsTeXFormat{LaTeX2e}
+{\def\tsrbeamer@versiondef#1#2{
+  \gdef\tsrbeamer@version@number{#1}
+  \gdef\tsrbeamer@version@date{#2}
+  \gdef\tsrbeamer@version{#2 #1 tsrbeamer MU beamer theme}}
+\tsrbeamer@versiondef{v1.1.5}{2016/06/16}}
+\hypersetup{%
+  pdfcreator=\tsrbeamer@version,
+  pdfencoding=auto}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{tsrbeamer/beamerthemetsrbeamer}[\tsrbeamer@version]
+\newif\iftsrbeamer@fonts
+\DeclareOptionBeamer{fonts}{\tsrbeamer@fontstrue}
+\ExecuteOptionsBeamer{fonts}
+\DeclareOptionBeamer{nofonts}{\tsrbeamer@fontsfalse}
+\newif\iftsrbeamer@microtype
+\DeclareOptionBeamer{microtype}{\tsrbeamer@microtypetrue}
+\ExecuteOptionsBeamer{microtype}
+\DeclareOptionBeamer{nomicrotype}{\tsrbeamer@microtypefalse}
+\DeclareOptionBeamer{university}{\def\tsrbeamer@university{#1}}
+\ExecuteOptionsBeamer{university=mu}
+\DeclareOptionBeamer{faculty}{\def\tsrbeamer@faculty{#1}}
+\ExecuteOptionsBeamer{faculty=tsr}
+\def\tsrbeamer@locale{%
+  % Babel / polyglossia detection
+  \ifx\languagename\undefined%
+  english\else\languagename\tsr}
+\DeclareOptionBeamer{locale}{%
+  \def\tsrbeamer@locale{#1}}
+\def\tsrbeamer@logoLocale{\tsrbeamer@locale}
+\DeclareOptionBeamer{logoLocale}{%
+  \def\tsrbeamer@logoLocale{#1}}
+\DeclareOptionBeamer{basePath}{%
+  \ifx\tsrbeamer@empty#1\tsrbeamer@empty%
+    \def\tsrbeamer@basePath{}%
+  \else%
+    \def\tsrbeamer@basePath{#1/}%
+  \fi}
+\ExecuteOptionsBeamer{basePath=tsrbeamer}
+\def\tsrbeamer@subdir#1#2#3#4\empty{%
+  \ifx#1\empty%           <empty> -> <basePath>
+    \tsrbeamer@basePath
+  \else
+    \if#1/%
+      \ifx#2\empty%             / -> /
+        /%
+      \else%              /<path> -> /<path>/
+        #1#2#3#4/%
+      \fi
+    \else
+      \if#1.%
+        \ifx#2\empty%           . -> ./
+          ./%
+        \else
+          \if#2.%
+            \ifx#3\empty%      .. -> ../
+              ../%
+            \else
+              \if#3/%   ../<path> -> ../<path>/
+                ../#4/%
+              \else
+                \tsrbeamer@basePath#1#2#3#4/%
+              \fi
+            \fi
+          \else
+            \if#2/%      ./<path> -> ./<path>/
+              ./#3#4/%
+            \else
+              \tsrbeamer@basePath#1#2#3#4/%
+            \fi
+          \fi
+        \fi
+      \else
+        \tsrbeamer@basePath#1#2#3#4/%
+      \fi
+    \fi
+  \fi}
+\DeclareOptionBeamer{themePath}{%
+  \def\tsrbeamer@themePath{\tsrbeamer@subdir#1%
+    \empty\empty\empty\empty}}
+\ExecuteOptionsBeamer{themePath=theme}
+\DeclareOptionBeamer{logoPath}{%
+  \def\tsrbeamer@logoPath{\tsrbeamer@subdir#1%
+    \empty\empty\empty\empty}}
+\ExecuteOptionsBeamer{logoPath=logo/\tsrbeamer@university}
+\DeclareOptionBeamer{logo}{\def\tsrbeamer@logo{#1}}
+\ExecuteOptionsBeamer{%
+  logo=\tsrbeamer@logoPath tsrbeamer-\tsrbeamer@university-%
+    \tsrbeamer@faculty-\tsrbeamer@logoLocale}
+\DeclareOptionBeamer{fallbackLogo}{\def\tsrbeamer@fallbackLogo{#1}}
+\def\tsrbeamer@fallbackLogo{%
+  \tsrbeamer@logoPath tsrbeamer-\tsrbeamer@university-%
+    \tsrbeamer@faculty-english}
+\def\tsrbeamer@require#1{\IfFileExists{#1.sty}{%
+  \@ifpackageloaded{#1}{}{\RequirePackage{#1}}}{}}
+\def\tsrbeamer@requireTheme#1{%
+  \tsrbeamer@require{\tsrbeamer@themePath beamer#1themetsrbeamer}
+  \tsrbeamer@require{\tsrbeamer@themePath\tsrbeamer@university%
+    /beamer#1themetsrbeamer-\tsrbeamer@university}
+  \tsrbeamer@require{\tsrbeamer@themePath\tsrbeamer@university%
+    /beamer#1themetsrbeamer-\tsrbeamer@university-\tsrbeamer@faculty}}
+\tsrbeamer@require{etoolbox}
+\newcommand\tsrbeamer@includeLogo[1][]{{
+  % See <http://tex.stackexchange.com/a/39987/70941>.
+  \patchcmd{\Gin@ii}% Make `\includegraphics` use `@fallbackLogo`.
+    {\begingroup}% <search>
+    {\begingroup\renewcommand{\@latex@error}[2]{%
+       \includegraphics[#1]\tsrbeamer@fallbackLogo}}% <replace>
+    {}% <success>
+    {}% <failure>
+  \includegraphics[#1]\tsrbeamer@logo}}
+\def\tsrbeamer@patch#1#2{%
+  \def\tsrbeamer@patch@versions{#1}%
+  \def\tsrbeamer@patch@action{#2}%
+  \def\tsrbeamer@patch@next##1,{%
+    \def\tsrbeamer@patch@arg{##1}%
+    \def\tsrbeamer@patch@relax{\relax}%
+    \ifx\tsrbeamer@patch@arg\tsrbeamer@version@number
+      \def\tsrbeamer@patch@next####1\relax,{}%
+      \expandafter\tsrbeamer@patch@action
+      \expandafter\tsrbeamer@patch@next
+    \else\ifx\tsrbeamer@patch@arg\tsrbeamer@patch@relax\else
+      \expandafter\expandafter\expandafter\tsrbeamer@patch@next
+    \fi\fi}%
+  \expandafter\expandafter\expandafter\tsrbeamer@patch@next
+  \expandafter\tsrbeamer@patch@versions\expandafter,\relax,}
+\ProcessOptionsBeamer
+  % Set up the microtypographic extensions
+  \iftsrbeamer@microtype
+    \RequirePackage{microtype}
+  \fi
+\mode<presentation>
+  % Set up the fonts
+  \iftsrbeamer@fonts
+    \RequirePackage{ifthen}
+    \RequirePackage{ifxetex}
+    \RequirePackage{ifluatex}
+    \RequirePackage{lmodern}
+    \RequirePackage[sfdefault,lf]{carlito}
+    \renewcommand*\oldstylenums[1]{{\carlitoOsF #1}}
+
+    %% Load arev with scaling factor of .85
+    %% See <http://tex.stackexchange.com/a/181240/70941>
+    \DeclareFontFamily{OML}{zavm}{\skewchar\font=127 }
+    \DeclareFontShape{OML}{zavm}{m}{it}{<-> s*[.85] zavmri7m}{}
+    \DeclareFontShape{OML}{zavm}{b}{it}{<-> s*[.85] zavmbi7m}{}
+    \DeclareFontShape{OML}{zavm}{m}{sl}{<->ssub * zavm/m/it}{}
+    \DeclareFontShape{OML}{zavm}{bx}{it}{<->ssub * zavm/b/it}{}
+    \DeclareFontShape{OML}{zavm}{b}{sl}{<->ssub * zavm/b/it}{}
+    \DeclareFontShape{OML}{zavm}{bx}{sl}{<->ssub * zavm/b/sl}{}
+
+    \AtBeginDocument{
+      \SetSymbolFont{operators}   {normal}{OT1}{zavm}{m}{n}
+      \SetSymbolFont{letters}     {normal}{OML}{zavm}{m}{it}
+      \SetSymbolFont{symbols}     {normal}{OMS}{zavm}{m}{n}
+      \SetSymbolFont{largesymbols}{normal}{OMX}{iwona}{m}{n}}
+    \RequirePackage[sans]{dsfont}
+
+    \ifthenelse{\boolean{xetex}\OR\boolean{luatex}}{
+      \RequirePackage{fontspec}
+      \setmonofont[Scale=0.85,Ligatures=TeX]{DejaVu Sans Mono}
+    }{
+      \usepackage[scaled=0.85]{DejaVuSansMono}
+      \RequirePackage[resetfonts]{cmap}
+      \RequirePackage[T1]{fontenc}
+    }
+    \RequirePackage{setspace}
+    \setstretch{1.15}
+  \fi
+\mode
+  <all>
+\tsrbeamer@requireTheme{color}
+\tsrbeamer@requireTheme{font}
+\tsrbeamer@requireTheme{inner}
+\tsrbeamer@requireTheme{outer}
+\endinput
+%%
+%% End of file `beamerthemetsrbeamer.sty'.

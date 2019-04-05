@@ -1,0 +1,140 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tsrbeamer/theme/mu/%
+  beamerouterthemetsrbeamer-mu}[2016/01/12]
+\mode<presentation>
+  \RequirePackage{ifthen}
+  \RequirePackage{ifpdf}
+  \ifpdf\else
+    \@ifundefined{pdfpagewidth}{\newdimen\pdfpagewidth}{}
+    \@ifundefined{pdfpageheight}{\newdimen\pdfpageheight}{}
+    \pdfpagewidth=\paperwidth
+    \pdfpageheight=\paperheight
+  \fi
+  \RequirePackage{tikz}
+  \RequirePackage{pgfcore}
+  \newlength\tsrbeamer@lengths@baseunit
+  \tsrbeamer@lengths@baseunit=3.75mm
+  % The footer padding
+  \newlength\tsrbeamer@lengths@footerpad
+  \setlength\tsrbeamer@lengths@footerpad{%
+    \tsrbeamer@lengths@baseunit}
+  % The side margins
+  \newlength\tsrbeamer@lengths@margin
+  \setlength\tsrbeamer@lengths@margin{%
+    3\tsrbeamer@lengths@baseunit}
+  \setbeamersize{
+    text margin left=\tsrbeamer@lengths@margin,
+    text margin right=\tsrbeamer@lengths@margin}
+  % The upper margin
+  \newlength\tsrbeamer@lengths@titleline
+  \setlength\tsrbeamer@lengths@titleline{%
+    3\tsrbeamer@lengths@baseunit}
+  % The background clipping
+  \newlength\tsrbeamer@lengths@clipbottom
+  \setlength\tsrbeamer@lengths@clipbottom\paperwidth
+  \addtolength\tsrbeamer@lengths@clipbottom{-\paperheight}
+  \setlength\tsrbeamer@lengths@clipbottom{%
+    0.5\tsrbeamer@lengths@clipbottom}
+  \newlength\tsrbeamer@lengths@cliptop
+  \setlength\tsrbeamer@lengths@cliptop\paperwidth
+  \addtolength\tsrbeamer@lengths@cliptop{%
+    -\tsrbeamer@lengths@clipbottom}
+  % The logo size
+  \newlength\tsrbeamer@lengths@logowidth
+  \setlength\tsrbeamer@lengths@logowidth{%
+    14\tsrbeamer@lengths@baseunit}
+  \newlength\tsrbeamer@lengths@logoheight
+  \setlength\tsrbeamer@lengths@logoheight{%
+    0.4\tsrbeamer@lengths@logowidth}
+  \defbeamertemplate*{navigation symbols}{tsrbeamer}{}
+  \defbeamertemplate*{headline}{tsrbeamer}{}
+  \defbeamertemplate*{frametitle}{tsrbeamer}{%
+    \begin{tikzpicture}[
+      remember picture,
+      overlay,
+      xshift=\framewidth - 0.1\tsrbeamer@lengths@logowidth,
+      yshift=0%\tsrbeamer@lengths@logoheight
+    ]
+      \node at (0,0) {
+        \tsrbeamer@includeLogo[
+          width=0.5\tsrbeamer@lengths@logowidth,
+          % height=\tsrbeamer@lengths@logoheight
+        ]};
+    \end{tikzpicture}
+    \vskip-2.5em % Align the text with the top border
+    \vskip\tsrbeamer@lengths@titleline
+    \usebeamercolor[fg]{frametitle}%
+    \usebeamerfont{frametitle}%
+      \insertframetitle\par%
+    \usebeamercolor[fg]{framesubtitle}%
+    \usebeamerfont{framesubtitle}%
+      \insertframesubtitle}
+  \defbeamertemplate*{footline}{tsrbeamer}{%
+    \ifnum\c@framenumber=0\else%
+      \begin{tikzpicture}[overlay]
+        \node[anchor=south east,
+          yshift=\tsrbeamer@lengths@footerpad,
+          xshift=-\tsrbeamer@lengths@footerpad] at
+          (current page.south east) {
+            \usebeamercolor[fg]{framenumber}%
+            \usebeamerfont{framenumber}%
+            \insertframenumber/\inserttotalframenumber};
+      \end{tikzpicture}
+    \fi}
+  \defbeamertemplate*{title page}{tsrbeamer}{%
+    % This is slide 0
+    \setcounter{framenumber}{0}
+
+    % Input the university logo
+    \begin{tikzpicture}[
+      remember picture,
+      overlay,
+      xshift=\framewidth - 0.1\tsrbeamer@lengths@logowidth,
+      yshift=0.5\tsrbeamer@lengths@logoheight
+    ]
+      \node at (0,0) {
+        \tsrbeamer@includeLogo[
+          width=0.5\tsrbeamer@lengths@logowidth,
+          % height=\tsrbeamer@lengths@logoheight
+        ]};
+    \end{tikzpicture}
+
+    % Input the title
+    \usebeamerfont{title}%
+    \usebeamercolor[fg]{title}%
+    \begin{minipage}[b][2\baselineskip][b]{\textwidth}%
+      \raggedright\inserttitle
+    \end{minipage}
+    \vskip-.5\baselineskip
+
+    % Input the dashed line
+    \begin{pgfpicture}
+      \pgfsetlinewidth{2pt}
+      \pgfsetroundcap
+      \pgfsetdash{{0pt}{4pt}}{0cm}
+
+      \pgfpathmoveto{\pgfpoint{0mm}{0mm}}
+      \pgfpathlineto{\pgfpoint{\textwidth}{0mm}}
+
+      \pgfusepath{stroke}
+    \end{pgfpicture}
+    \vfill
+    % Input the subtitle
+    \usebeamerfont{subtitle}%
+    \usebeamercolor[fg]{subtitle}%
+    \begin{minipage}{\textwidth}
+      \raggedright%
+      \insertsubtitle%
+    \end{minipage}\vskip.25\baselineskip
+
+    % Input the author's name
+    \usebeamerfont{author}%
+    \usebeamercolor[fg]{author}%
+    \begin{minipage}{\textwidth}
+      \raggedright%
+      \insertauthor%
+    \end{minipage}}
+    
+\mode
+<all>
+\endinput

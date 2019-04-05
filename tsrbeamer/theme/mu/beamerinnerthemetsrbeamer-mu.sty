@@ -1,0 +1,35 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tsrbeamer/theme/mu/%
+  beamerinnerthemetsrbeamer-mu}[2016/01/14]
+\mode<presentation>
+\defbeamertemplate*{itemize item}{tsrbeamer}{$\bullet$}
+\defbeamertemplate*{itemize subitem}{tsrbeamer}{\---}
+\defbeamertemplate*{itemize subsubitem}{tsrbeamer}{\guillemotright}
+\defbeamertemplate*{bibliography item}{tsrbeamer}{\insertbiblabel}
+\AtBeginDocument{%
+  \let\tsrbeamer@oldcite\cite
+  \def\cite#1{{%
+    \usebeamercolor[fg]{item}%
+    \tsrbeamer@oldcite{#1}}}}
+\defbeamertemplate*{section in toc}{tsrbeamer}{%
+  \usebeamercolor[fg]{item}%
+    \inserttocsectionnumber.%
+  \usebeamercolor[fg]{structure}%
+  \kern1.25ex\inserttocsection\par}
+\defbeamertemplate*{subsection in toc}{tsrbeamer}{%
+  \hspace\leftmargini
+  \usebeamercolor[fg]{item}%
+    \inserttocsectionnumber.\inserttocsubsectionnumber%
+  \usebeamercolor[fg]{structure}%
+  \kern1.25ex\inserttocsubsection\par}
+\defbeamertemplate*{subsubsection in toc}{tsrbeamer}{%
+  \hspace\leftmargini
+  \hspace\leftmarginii
+  \usebeamercolor[fg]{item}%
+    \inserttocsectionnumber.\inserttocsubsectionnumber.%
+    \inserttocsubsubsectionnumber%
+  \usebeamercolor[fg]{structure}%
+  \kern1.25ex\inserttocsubsubsection\par}
+\mode
+<all>
+\endinput
