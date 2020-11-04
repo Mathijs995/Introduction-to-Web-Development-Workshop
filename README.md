@@ -1,8 +1,11 @@
-# Supervised Machine Learning
-Welcome to the Github repository of the Introduction to Web Development workshop created by [Mathijs de Jong](https://www.linkedin.com/in/mathijsdejong995/). This workshop was hosted by Turing Students Rotterdam during the EY innovation hackathon in 2019.
+# LaTeX Workshop
+Welcome to the Github repository of the LaTeX workshop created by [Mathijs de Jong](https://www.linkedin.com/in/mathijsdejong995/). This workshop was originally designed for a coding hours sessions hosted by Turing Students Rotterdam and has since been presented at multiple iterations of the [EFR/ESE job market skills week](https://www.efr.nl/education/efrese-job-market-skills) and the EUR Career Skills Week.
 
-## Assignments
-- **Week 1** - Explaining Air Quality with Economic and Environmental Factors ([report](Week 1/Assignment 1/SML - Assignment 1 - Group 5.pdf), [code](Week 1/Assignment 1))
+## Table of contents
+- [Workshop slides](https://github.com/Mathijs995/LaTeX-Workshop/raw/master/LaTeX%20Workshop%20-%20Presentation.pdf)
 
-## Mistakes or Inconsistencies
-Found a mistake or inconsistency? [Open a new issue](https://github.com/Mathijs995/supervised-machine-learning/issues) here on GitHub or [send me an email](mailto:mathijsdejong1995@gmail.com).
+## I found a mistake or something is not clear, what do I do?
+Please file an issue or contact me. You would greatly help me out improve the workshop content!
+
+## License
+This content is licensed under an MIT license, meaning you can use it for your own workshops. If you do, I would like to hear your feedback and share knowledge, so feel free to contact me at mathijsdejong1995 [at] gmail.com.
